@@ -31,16 +31,16 @@ INTERP = {'+': inc_deref_ptr, '>': inc_ptr,'<': dec_ptr, '-':
 
 MEM = [0 for i in range(30000)]
 
-with open('testfile.bfk', 'r') as f:
-    loop = False
-    whilebuff = ""
-    for j in f:
-        for i in j:
-            if i is '[' or loop:
-                loop = True
-                if i == ']':
-                    runthis(whilebuff[1:])
-                    loop = False
-                whilebuff += i
-            else:
-                INTERP.get(i)()
+loop = False
+whilebuff = ""
+while 1:
+    j = raw_input()
+    for i in j:
+        if i is '[' or loop:
+            loop = True
+            if i == ']':
+                runthis(whilebuff[1:])
+                loop = False
+            whilebuff += i
+        else:
+            INTERP.get(i)()
