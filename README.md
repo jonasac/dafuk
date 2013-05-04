@@ -1,4 +1,4 @@
 dafuk
 =====
 
-Brainfuck interpeter
+Brainfuck interpreter
