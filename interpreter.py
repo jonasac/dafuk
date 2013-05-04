@@ -19,8 +19,7 @@ def wr():
 def rd():
     global pointer
     MEM[pointer] = ord(sys.stdin.read(1))
-def junk():
-    pass
+    
 def runthis(this):
     for count in range(MEM[pointer]):
         for thing in this:
