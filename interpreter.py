@@ -16,7 +16,6 @@ def dec_deref_ptr():
 def wr():
     global pointer, screenbuffer
     screenbuffer += chr(MEM[pointer])
-#    sys.stdout.write(chr(MEM[pointer]))
 def rd():
     global pointer
     MEM[pointer] = ord(sys.stdin.read(1))
@@ -30,7 +29,7 @@ def runthis(this):
             except:
                 pass
 INTERP = {'+': inc_deref_ptr, '>': inc_ptr,'<': dec_ptr, '-':
-        dec_deref_ptr, '.': wr, ',': rd, '\n': junk, ' ': junk}
+        dec_deref_ptr, '.': wr, ',': rd}
 
 MEM = [0 for i in range(30000)]
 
