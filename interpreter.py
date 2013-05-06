@@ -1,6 +1,7 @@
-import sys, os
+import sys, os, console
 from time import sleep
 screenbuffer = ""
+commandline = console.Console()
 pointer = 0
 def inc_ptr():
     global pointer
@@ -56,7 +57,7 @@ INTERP = {'+': inc_deref_ptr, '>': inc_ptr,'<': dec_ptr, '-':
 
 MEM = [0 for i in range(30000)]
 
-def build_mem_overview():
+def build_screen():
     global MEM
     overview = ""
     for i in range(len(MEM)):
@@ -65,20 +66,21 @@ def build_mem_overview():
             if MEM[i] > 32 and MEM[i] < 126:
                 overview += " -> " + chr(MEM[i])
             overview += "]\n"
-    print "Used memory:"
-    print overview
-
+    commandline.prompt = ""
+    commandline.prompt += "Used memory:\n"
+    commandline.prompt += overview + "\n"
+    commandline.prompt += screenbuffer + "\n"
+    commandline.prompt += "\n=>> "
+    os.system("clear")
 loop = False
 whilebuff = ""
-while 1:
-    os.system("clear")
-    build_mem_overview()
-    print screenbuffer
-    print ">>> ",
-    j = raw_input()
+def default(line = ""):
+    global loop
+    global whilebuff
+    j = line
     if "load" in j:
         load_program(j[5:])
-        continue
+        return
     for i in j:
         if i is '[' or loop:
             loop = True
@@ -91,3 +93,9 @@ while 1:
                 INTERP.get(i)()
             except:
                 pass
+
+    build_screen()
+commandline.default = default
+commandline.emptyline = default
+commandline.intro = "Welcome to Dafuk (Brainfuck interpeter)"
+commandline.cmdloop()
