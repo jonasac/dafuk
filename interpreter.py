@@ -3,6 +3,42 @@ from time import sleep
 screenbuffer = ""
 commandline = console.Console()
 pointer = 0
+REPR = {
+"000": ["NUL", "(Null char.)"], 
+"001": ["SOH", "(Start of Header)"], 
+"002": ["STX", "(Start of Text)"], 
+"003": ["ETX", "(End of Text)"], 
+"004": ["EOT", "(End of Transmission)"], 
+"005": ["ENQ", "(Enquiry)"], 
+"006": ["ACK", "(Acknowledgment)"], 
+"007": ["BEL", "(Bell)"], 
+"008": ["BS", "(Backspace)"], 
+"009": ["HT", "(Horizontal Tab)"], 
+"010": ["LF", "(Line Feed)"], 
+"011": ["VT", "(Vertical Tab)"], 
+"012": ["FF", "(Form Feed)"], 
+"013": ["CR", "(Carriage Return)"], 
+"014": ["SO", "(Shift Out)"], 
+"015": ["SI", "(Shift In)"], 
+"016": ["DLE", "(Data Link Escape)"], 
+"017": ["DC1", "(XON)(Device Control 1)"], 
+"018": ["DC2", "(Device Control 2)"], 
+"019": ["DC3", "(XOFF)(Device Control 3)"], 
+"020": ["DC4", "(Device Control 4)"], 
+"021": ["NAK", "(Negative Acknowledgement)"], 
+"022": ["SYN", "(Synchronous Idle)"], 
+"023": ["ETB", "(End of Trans. Block)"], 
+"024": ["CAN", "(Cancel)"], 
+"025": ["EM", "(End of Medium)"], 
+"026": ["SUB", "(Substitute)"], 
+"027": ["ESC", "(Escape)"], 
+"028": ["FS", "(File Separator)"], 
+"029": ["GS", "(Group Separator)"], 
+"030": ["RS", "(Request to Send)(Record Separator)"], 
+"031": ["US", "(Unit Separator)"], 
+"032": ["SP", "(Space)"], 
+"127": ["DEL", "(delete)"]
+}
 def inc_ptr():
     global pointer
     pointer += 1
@@ -65,6 +101,9 @@ def build_screen():
             overview += "%d" % i + ": [%d" % MEM[i]
             if MEM[i] > 32 and MEM[i] < 126:
                 overview += " -> " + chr(MEM[i])
+            else:
+                rep = REPR["%03d" % MEM[i]]
+                overview += " -> " + rep[0] + " " + rep[1]
             overview += "]\n"
     commandline.prompt = ""
     commandline.prompt += "Used memory:\n"
