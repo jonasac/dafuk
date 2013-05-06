@@ -56,10 +56,23 @@ INTERP = {'+': inc_deref_ptr, '>': inc_ptr,'<': dec_ptr, '-':
 
 MEM = [0 for i in range(30000)]
 
+def build_mem_overview():
+    global MEM
+    overview = ""
+    for i in range(len(MEM)):
+        if MEM[i] > 0:
+            overview += "%d" % i + ": [%d" % MEM[i]
+            if MEM[i] > 32 and MEM[i] < 126:
+                overview += " -> " + chr(MEM[i])
+            overview += "]\n"
+    print "Used memory:"
+    print overview
+
 loop = False
 whilebuff = ""
 while 1:
     os.system("clear")
+    build_mem_overview()
     print screenbuffer
     print ">>> ",
     j = raw_input()
